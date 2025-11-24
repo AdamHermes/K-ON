@@ -39,7 +39,7 @@ class KONAttn(nn.Module):
             output = out_mlp(x) #+ x
             outputs.append(output)
         uncontioned = torch.stack(outputs, axis=1) # batch size, seq length, hidden dim
-        attn_output, _ = self.k_on_attn(uncontioned, uncontioned, uncontioned, need_weights=False, is_causal=True) 
+        attn_output, _ = self.k_on_attn(uncontioned, uncontioned, uncontioned, need_weights=False) 
         attn_output =  attn_output*0.2 + x.unsqueeze(1)*0.5 + uncontioned*0.8  # attn with resnet attn_output +
         predictions = []
         for i in range(self.cfg.num_k_on):
